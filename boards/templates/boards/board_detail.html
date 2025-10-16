@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>{{ board.title }}</h2>
+
+<a href="{% url 'add_item' board.id %}">+ Add Item</a>
+
+<ul>
+  {% for item in items %}
+    <li>
+      <h3>{{ item.title }}</h3>
+      {% if item.image %}
+        <img src="{{ item.image.url }}" alt="{{ item.title }}" width="200">
+      {% endif %}
+      <p>{{ item.description }}</p>
+    </li>
+  {% empty %}
+    <p>No items yet. <a href="{% url 'add_item' board.id %}">Add one!</a></p>
+  {% endfor %}
+</ul>
+{% endblock %}

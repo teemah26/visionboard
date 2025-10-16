@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+</head>
+<body>
+    <h1>VisionVault Dashboard</h1>
+    <p>Welcome, {{ user.username }}!</p>
+    <a href="{% url 'logout' %}">Logout</a>
+
+    <h2>Your Boards</h2>
+    {% for board in boards %}
+        <div style="margin-bottom: 30px; border: 1px solid #ccc; padding: 10px;">
+            <h3>{{ board.title }}</h3>
+
+            {% if board.items.all %}
+                <ul>
+                    {% for item in board.items.all %}
+                        <li>
+                            <strong>{{ item.title }}</strong><br>
+                            {% if item.image %}
+                                <img src="{{ item.image.url }}" alt="{{ item.title }}" width="150"><br>
+                            {% endif %}
+                            <p>{{ item.description }}</p>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No items yet.</p>
+            {% endif %}
+        </div>
+    {% endfor %}
+</body>
+</html>
