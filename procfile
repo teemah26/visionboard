@@ -1,2 +1,2 @@
-web: gunicorn visionvault.wsgi
+web: gunicorn visionvault.wsgi:application
 
