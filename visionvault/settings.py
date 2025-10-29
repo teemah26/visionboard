@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
-import os
+
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -41,35 +41,9 @@ INSTALLED_APPS = [
     'users',
     'crispy_forms',
     'django_cleanup.apps.CleanupConfig',
-    'rest_framework',
-    'rest_framework_simplejwt',
-    "drf_spectacular",
-    "drf_spectacular_sidecar",
 
 ]
 
-REST_FRAMEWORK = {
-    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
-    "DEFAULT_AUTHENTICATION_CLASSES": [
-        "rest_framework_simplejwt.authentication.JWTAuthentication",
-    ],
-}
-
-SPECTACULAR_SETTINGS = {
-    "TITLE": "VisionVault API",
-    "DESCRIPTION": "API documentation for VisionVault project",
-    "VERSION": "1.0.0",
-    "SERVE_INCLUDE_SCHEMA": False,
-
-    # 👇 this tells Swagger UI about JWT
-    "SECURITY_DEFINITIONS": {
-        "BearerAuth": {
-            "type": "http",
-            "scheme": "bearer",
-            "bearerFormat": "JWT",
-        }
-    },
-}
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -78,7 +52,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware'
 ]
 
 ROOT_URLCONF = 'visionvault.urls'
@@ -147,23 +120,31 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR / "staticfiles"   # 👈 add this
-STATICFILES_DIRS = [
-    BASE_DIR / "static",                 # optional, for dev static files
-]
-
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+import os
+
+# Media
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Static
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 # Templates
 TEMPLATES[0]['DIRS'] = [BASE_DIR / "templates"]
 
 # Crispy Forms
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+# Static files settings
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# Media files (optional but recommended)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
